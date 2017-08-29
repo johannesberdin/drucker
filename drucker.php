@@ -9,7 +9,9 @@ use Drucker\Drucker;
 
 require __DIR__.'/vendor/autoload.php';
 
-$print = new Drucker();
+$mailPath = getcwd() . '/mails';
+
+$printer = new Drucker($mailPath);
 
 $parser = new Parser();
 $parser->setText(file_get_contents('php://stdin'));
@@ -19,5 +21,5 @@ echo "[inf] ".'Got mail: '.$parser->getHeader('from').' '.$parser->getHeader('su
 // Print attachments
 $attachments = $parser->getAttachments();
 foreach ($attachments as $attachment) {
-    $print->paper($attachment->getContent());
+    $printer->queue($attachment->getContent());
 }

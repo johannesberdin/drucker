@@ -2,23 +2,54 @@
 
 namespace Drucker;
 
+use Illuminate\Support\Str;
+use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-class Drucker {
+class Drucker
+{
+    private $filesystem;
+    private $mailPath;
     private $command;
 
-    public function __construct($command = 'lpr')
+    public function __construct($mailPath = 'mails', $command = 'lp', $filesystem = null)
     {
         $this->command = $command;
+        $this->filesystem = $filesystem ?: new Filesystem();
+
+        $this->prepareDirectory($mailPath);
+        $this->mailPath = $mailPath;
     }
 
-    public function paper($code) {
-      $builder = $this->createProcessBuilder();
+    private function prepareDirectory($directory)
+    {
+        if (!$this->filesystem->isDirectory($directory)) {
+            $this->filesystem->makeDirectory($directory, 0755, true);
+        }
+    }
 
-      $process = $builder->setInput($code)->getProcess();
-      return $this->getOutput($process);
+    private function cleanupDirectory($directory)
+    {
+        $this->filesystem->delete($directory);
+    }
+
+    public function queue($contents)
+    {
+        $filePath = $this->mailPath . '/' . Str::random(32);
+
+        $this->filesystem->put($filePath, $contents);
+
+        $builder = $this->createProcessBuilder();
+        $process = $builder->setInput($filePath)->getProcess();
+
+        $output = $this->getOutput($process);
+
+        // This is pretty much a fire-and-forget approach.
+        if (preg_match("/request\s+id\s+is\s+(.*)\s+\(\d+ file\(s\)\)/", $output, $match)) {
+            $this->filesystem->delete($filePath);
+        }
     }
 
     protected function createProcessBuilder()

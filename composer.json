@@ -1,7 +1,9 @@
 {
     "require": {
         "php-mime-mail-parser/php-mime-mail-parser": "^2.9",
-        "symfony/process": "^3.3"
+        "symfony/process": "^3.3",
+        "illuminate/support": "^5.4",
+        "illuminate/filesystem": "^5.4"
     },
     "autoload": {
         "psr-4": {
