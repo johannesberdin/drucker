@@ -42,7 +42,7 @@ class Drucker
         $this->filesystem->put($filePath, $contents);
 
         $builder = $this->createProcessBuilder();
-        $process = $builder->setInput($filePath)->getProcess();
+        $process = $builder->add($filePath)->getProcess();
 
         $output = $this->getOutput($process);
 
