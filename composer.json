@@ -1,4 +1,14 @@
 {
+    "name": "johannesberdin/drucker",
+    "description": "Print mails from everywhere",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Berdin",
+            "email": "ich@johannesberdin.de"
+        }
+    ],
     "require": {
         "php-mime-mail-parser/php-mime-mail-parser": "^2.9",
         "symfony/process": "^3.3",
