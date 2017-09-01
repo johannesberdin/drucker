@@ -7,6 +7,7 @@ I'm on the go most of the time and I really do not want to replace my lovely Bro
 ## Feature list
 - Print all mail attachments
 - Print mail thread including original message and forwarded/quoted mails
+- Configure allowed senders to prevent empty paper trays
 
 ## In development
 - Write some setup instructions
