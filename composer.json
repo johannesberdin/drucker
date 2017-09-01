@@ -3,7 +3,8 @@
         "php-mime-mail-parser/php-mime-mail-parser": "^2.9",
         "symfony/process": "^3.3",
         "illuminate/support": "^5.4",
-        "illuminate/filesystem": "^5.4"
+        "illuminate/filesystem": "^5.4",
+        "symfony/yaml": "^3.3"
     },
     "autoload": {
         "psr-4": {

@@ -1,0 +1,3 @@
+mail path: mails # specifies the path where mails and attachments will be stored for queueing
+allowed senders: # specifies a list of allowed senders represented as a regular expression
+- "(.*)" # allow all
