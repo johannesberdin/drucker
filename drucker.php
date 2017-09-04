@@ -46,14 +46,14 @@ do {
         // Print attachments
         $attachments = $parser->getAttachments();
         foreach ($attachments as $attachment) {
-            //$printer->queue($attachment->getContent());
+            $printer->queue($attachment->getContent());
         }
 
         // Pipe parsed mail content to our quote extractor.
         $parsedMail = new Mail($parser->getMessageBody('text'));
 
         // Print the actual mail.
-        //$printer->queue($parsedMail->getOriginal());
+        $printer->queue($parsedMail->getOriginal());
 
         // Handle forwarded mail.
         $mail = $parsedMail->getQuote();
