@@ -35,4 +35,5 @@ Test your configuration via `fetchmail -L /var/log/fetchmail.log -f /opt/drucker
 - Configure allowed senders to prevent empty paper trays
 
 ## In development
+- Nice email template
 - Code some test cases
