@@ -1,3 +1,4 @@
 mail path: mails # specifies the path where mails and attachments will be stored for queueing
+mail template: mail.rtf # specifies the mail template for printing text content
 allowed senders: # specifies a list of allowed senders represented as a regular expression
 - "(.*)" # allow all

@@ -33,7 +33,7 @@ Test your configuration via `fetchmail -L /var/log/fetchmail.log -f /opt/drucker
 - Print all mail attachments
 - Print mail thread including original message and forwarded/quoted mails
 - Configure allowed senders to prevent empty paper trays
+- Use simple mail template
 
 ## In development
-- Nice email template
 - Code some test cases

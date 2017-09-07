@@ -3,7 +3,7 @@
 <?php
 set_time_limit(0);
 
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/Berlin');
 
 use PhpMimeMailParser\Parser;
 use Symfony\Component\Process\Process;
@@ -17,6 +17,8 @@ $configPath = getcwd() . '/drucker.yml';
 $config = Yaml::parse(file_get_contents($configPath));
 
 $mailPath = getcwd() . DIRECTORY_SEPARATOR .  $config['mail path'];
+
+$templatePath = getcwd() . DIRECTORY_SEPARATOR . $config['mail template'];
 
 // Zee Drucker.
 $printer = new Drucker($mailPath);
@@ -52,10 +54,22 @@ do {
         }
 
         // Pipe parsed mail content to our quote extractor.
-        $parsedMail = new Mail($parser->getMessageBody('text'));
+        $parsedMail = new Mail($parser->getMessageBody('text'), $parser->getHeaders());
+
+        // Pour the mail into template.
+        extract([
+          'from' => $parsedMail->getFrom(),
+          'subject' => $parsedMail->getSubject(),
+          'to' => $parsedMail->getTo(),
+          'date' => $parsedMail->getDate(),
+          'text' => $parsedMail->getOriginal()
+        ]);
+        ob_start();
+        include($templatePath);
+        $htmlMail = ob_get_clean();
 
         // Print the actual mail.
-        $printer->queue($parsedMail->getOriginal());
+        $printer->queue($htmlMail);
 
         // Handle forwarded mail.
         $mail = $parsedMail->getQuote();
